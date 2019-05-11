@@ -268,15 +268,23 @@ var Aff = function () {
         attempt   = null;
         canceler  = null;
 
+
         switch (status) {
         case STEP_BIND:
           status = CONTINUE;
-          step   = bhead(step);
-          if (btail === null) {
-            bhead = null;
-          } else {
-            bhead = btail._1;
-            btail = btail._2;
+          try{
+              step = bhead(step);
+              if (btail === null) {
+                  bhead = null;
+              } else {
+                  bhead = btail._1;
+                  btail = btail._2;
+              }
+          }catch(e){
+            console.log("Pure function unhandled error", e);
+            status = RETURN;
+            fail = util.left(e);
+            step = null;
           }
           break;
 

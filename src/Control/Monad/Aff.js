@@ -281,7 +281,7 @@ var Aff = function () {
                   btail = btail._2;
               }
           }catch(e){
-            console.log("Pure function unhandled error", e);
+            step = runSync(util.left, util.right,_log("Unhandled Error Occured: "+e));
             status = RETURN;
             fail = util.left(e);
             step = null;
@@ -1028,6 +1028,12 @@ var Aff = function () {
   return Aff;
 }();
 
+function _log(s) {
+  return function () {
+    console.log(s);
+    return {};
+  };
+}
 exports._pure = Aff.Pure;
 
 exports._throwError = Aff.Throw;
